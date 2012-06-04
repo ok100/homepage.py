@@ -6,7 +6,7 @@ import os
 ### begin config ###
 
 output = 'homepage.html'           # output html file
-title = 'OK100'                    # title of the page
+title = 'Speed Dial'               # title of the page
 font = ['Monospace', '14px']       # font
 bgcolor = '#020202'                # background color
 fgcolor = '#999999'                # foreground color
@@ -16,36 +16,17 @@ sepcolor = '#4C4C4C'               # separator color
 
 # add your links here
 links = {
-    'admin': [
-        ['cups', 'http://localhost:631/'],
-        ['dd-wrt', 'http://192.168.1.1/'],
-        ['diskstation', 'http://192.168.1.147/'],
-        ['transmission', 'http://127.0.0.1:9091/transmission/web/'],
-        ['dropbox', 'https://www.dropbox.com/home'],
+    'foo': [
+        ['google', 'https://www.google.com/'],
+        ['duckduckgo', 'http://duckduckgo.com/'],
+        ['startpage', 'https://startpage.com/'],
     ],
-    'arch': [
-        ['wiki', 'https://wiki.archlinux.org/index.php/Main_Page'],
-        ['forums', 'https://bbs.archlinux.org/index.php'],
-    ],
-    'art': [
-        ['deviantart', 'http://www.deviantart.com/'],
-        ['simpledesktops', 'http://simpledesktops.com/'],
-        ['wallbase', 'http://wallbase.cc/home'],
-        ['omploader', 'http://ompldr.org/'],
-    ],
-    'dev': [
-        ['github', 'https://github.com/ok100'],
-    ],
-    'media': [
-        ['last.fm', 'http://www.last.fm/home'],
+    'bar': [
+        ['wikipedia', 'http://en.wikipedia.org/wiki/Main_Page'],
         ['youtube', 'http://www.youtube.com/'],
     ],
-    'misc': [
-        ['shmú', 'http://www.shmu.sk/sk/?page=1'],
-    ],
-    'linux': [
-        ['abclinuxu', 'http://www.abclinuxu.cz/'],
-        ['root', 'http://www.root.cz/'],
+    'blah': [
+        ['wallbase', 'http://wallbase.cc/home'],
     ],
 }
 
