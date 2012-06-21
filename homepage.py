@@ -8,6 +8,7 @@ import os
 output = 'homepage.html'           # output html file
 title = 'Speed Dial'               # title of the page
 font = ['Monospace', '14px']       # font
+separator = '>'                    # separator between group title and links
 bgcolor = '#020202'                # background color
 fgcolor = '#999999'                # foreground color
 lnkcolor = '#999999'               # link color
@@ -66,7 +67,8 @@ td:nth-child(2) {
 links_template = '<table valign="middle" border="0" \
                   width="100%" height="100%"><tr><td><table>'
 for group in sorted(links):
-    links_template += '<tr><td align="right">%s</td><td>></td><td>' % group
+    links_template += '<tr><td align="right">%s</td> \
+                       <td>%s</td><td>' % (group, separator)
     for site in sorted(links[group]):
         links_template += '<a href="%s">%s</a> ' % (site[1], site[0])
     links_template += '</td></tr>'
