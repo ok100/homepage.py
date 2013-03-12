@@ -5,13 +5,13 @@
 
 output = 'homepage.html'      # output file
 title = 'Speed Dial'          # page title
-font = ('Monospace', '14px')  # font
+font = ('Monospace', '12pt')  # font
 separator = '>'               # separator between group title and links
 colors = (
-    '#020202',  # background
-    '#999999',  # links
-    '#B3B3B3',  # group title
-    '#4C4C4C',  # separator
+    '#020202',                # background
+    '#999999',                # links
+    '#B3B3B3',                # group title
+    '#4C4C4C',                # separator
 )
 
 # add your links here
@@ -37,7 +37,6 @@ import os
 css = '''body {
   background-color: %s;
   font-family: "%s";
-  font-size: %s;
   font-weight: normal;
   margin-left: 7%%;
 }
@@ -52,6 +51,7 @@ a:hover {
   font-weight: normal;
 }
 table {
+  font-size: %s;
   border-spacing: 8px;
 }
 td:first-child {
@@ -61,7 +61,7 @@ td:first-child {
 td:nth-child(2) {
   font-weight: normal;
   color: %s;
-}''' % (colors[0], font[0], font[1], colors[1], colors[1], colors[2], colors[3])
+}''' % (colors[0], font[0], colors[1], colors[1], font[1], colors[2], colors[3])
 
 links_html = ''
 for group in sorted(links):
