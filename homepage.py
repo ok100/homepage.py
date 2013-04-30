@@ -1,91 +1,115 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-########## begin config ##########
+# Copyright (c) 2013 Ondrej Kipila <ok100 at lavabit dot com>
+# This work is free. You can redistribute it and/or modify it under the
+# terms of the Do What The Fuck You Want To Public License, Version 2,
+# as published by Sam Hocevar. See the COPYING file for more details.
 
-output = 'homepage.html'      # output file
-title = 'Speed Dial'          # page title
-font = ('Monospace', '12pt')  # font
-separator = '>'               # separator between group title and links
-colors = (
-    '#020202',                # background
-    '#999999',                # links
-    '#B3B3B3',                # group title
-    '#4C4C4C',                # separator
-)
-
-# add your links here
-links = {
-    'foo': [
-        ['google', 'https://www.google.com/'],
-        ['duckduckgo', 'http://duckduckgo.com/'],
-        ['startpage', 'https://startpage.com/'],
-    ],
-    'bar': [
-        ['wikipedia', 'http://en.wikipedia.org/wiki/Main_Page'],
-        ['youtube', 'http://www.youtube.com/'],
-    ],
-    'blah': [
-        ['wallbase', 'http://wallbase.cc/home'],
-    ],
-}
-
-########## end config ##########
-
+import argparse
 import os
+import runpy
 
-css = '''body {
-  background-color: %s;
-  font-family: "%s";
-  font-weight: normal;
-  margin-left: 7%%;
-}
-a:link,a:visited,a:active {
-  text-decoration: none;
-  color: %s;
-  font-weight: normal;
-}
-a:hover {
-  text-decoration: underline;
-  color: %s;
-  font-weight: normal;
-}
-table {
-  font-size: %s;
-  border-spacing: 8px;
-}
-td:first-child {
-  font-weight: bold;
-  color: %s
-}
-td:nth-child(2) {
-  font-weight: normal;
-  color: %s;
-}''' % (colors[0], font[0], colors[1], colors[1], font[1], colors[2], colors[3])
 
-links_html = ''
-for group in sorted(links):
-    links_html += '<tr><td align="right">%s</td><td>%s</td><td>' % (group, separator)
-    for site in sorted(links[group]):
-        links_html += '<a href="%s">%s</a> ' % (site[1], site[0])
-    links_html += '</td></tr>'
+config = {
+    'output_dir': os.environ['HOME'],
+    'title': 'Start Page',
+    'font': ('Monospace', '12pt'),
+    'separator': '>',
+    'colors': ('#020202', '#999999', '#B3B3B3', '#4C4C4C'),
+    'links': {
+        'search': [
+            ['google', 'https://www.google.com/'],
+            ['duckduckgo', 'http://duckduckgo.com/'],
+            ['startpage', 'https://startpage.com/'],
+        ],
+        'media': [
+            ['youtube', 'http://www.youtube.com/'],
+        ],
+        'foo': [
+            ['wikipedia', 'http://en.wikipedia.org/wiki/Main_Page'],
+            ['wallbase', 'http://wallbase.cc/home'],
+        ],
+    },
+}
 
-html = '''<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>%s</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body>
-  <table valign="middle" border="0" width="100%%" height="100%%"><tr><td><table>
-    %s
-  </table></td></tr></table>
-</body>
-</html>''' % (title, links_html)
 
-with open(output, 'w') as file:
-    file.write(html)
-with open('style.css', 'w') as file:
-    file.write(css)
+def parse_args():
+    parser = argparse.ArgumentParser(prog='homepage.py')
+    parser.add_argument('-c', '--config-file', help='path to an alternate config file')
+    parser.add_argument('-o', '--output-dir', help='output directory')
+    return parser.parse_args()
 
-os.system('tidy -utf8 -i -m -q -asxhtml %s' % output)
+
+def main():
+    args = parse_args()
+
+    config_file = args.config_file or '%s/.config/homepage/homepage.conf' % os.environ['HOME']
+    if os.path.exists(config_file):
+        config.update((k, v) for k, v in runpy.run_path(config_file).items() if k in config)
+
+    css = '''body {
+      background-color: %s;
+      font-family: "%s";
+      font-weight: normal;
+      margin-left: 7%%;
+    }
+    a:link,a:visited,a:active {
+      text-decoration: none;
+      color: %s;
+      font-weight: normal;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: %s;
+      font-weight: normal;
+    }
+    table {
+      font-size: %s;
+      border-spacing: 8px;
+    }
+    td { 
+      vertical-align: middle;
+    }
+    td:first-child {
+      font-weight: bold;
+      color: %s
+    }
+    td:nth-child(2) {
+      font-weight: normal;
+      color: %s;
+    }''' % (config['colors'][0], config['font'][0], config['colors'][1], config['colors'][1],
+            config['font'][1], config['colors'][2], config['colors'][3])
+    
+    links_html = ''
+    for group in sorted(config['links']):
+        links_html += '<tr><td align="right">%s</td><td>%s</td><td>' % (group, config['separator'])
+        for site in sorted(config['links'][group]):
+            links_html += '<a href="%s">%s</a> ' % (site[1], site[0])
+        links_html += '</td></tr>'
+    
+    html = '''<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    <html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>%s</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+      </head>
+      <body>
+        <table summary="container" border="0" width="100%%" height="100%%"><tr><td><table summary="container">
+          %s
+        </table></td></tr></table>
+      </body>
+    </html>''' % (config['title'], links_html)
+    
+    if not os.path.exists(config['output_dir']):
+        os.makedirs(config['output_dir'])
+    with open(config['output_dir'] + '/homepage.html', 'w') as file:
+        file.write(html)
+    with open(config['output_dir'] + '/style.css', 'w') as file:
+        file.write(css)
+    
+    os.system('tidy -utf8 -i -m -q -asxhtml %s' % config['output_dir'] + '/homepage.html')
+
+
+if __name__ == "__main__":
+    main()
