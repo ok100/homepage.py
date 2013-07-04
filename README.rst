@@ -82,4 +82,4 @@ Options
     Colors. Consists of four ``string`` elements: background, links, group title, separator.
 
 ``links`` (type: ``dictionary``)
-    Links. Each dictionary key (``list``) is a group of links (``list``). Each link has two elements: link name (``string``) and uri (``string``) (see example above).
+    Links. Each dictionary value (``list``) is a group of links (``list``). Each link has two elements: link name (``string``) and uri (``string``) (see example above).
