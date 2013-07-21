@@ -37,6 +37,7 @@ Default path to the configuration file is ``$HOME/.config/homepage/homepage.conf
 Configuration file with default options would look like this::
 
     import os
+    from collections import OrderedDict
     
     output_dir = os.environ['HOME']
     title = 'Speed Dial'
@@ -48,20 +49,21 @@ Configuration file with default options would look like this::
         '#B3B3B3',  # group title
         '#4C4C4C',  # separator
     )
-    links = {
-        'search': [
+    links = OrderedDict([
+        ('search', [
             ['google', 'https://www.google.com/'],
             ['duckduckgo', 'http://duckduckgo.com/'],
             ['startpage', 'https://startpage.com/'],
-        ],
-        'media': [
+        ]),
+        ('media', [
             ['youtube', 'http://www.youtube.com/'],
-        ],
-        'foo': [
+        ]),
+        ('foo', [
             ['wikipedia', 'http://en.wikipedia.org/wiki/Main_Page'],
             ['wallbase', 'http://wallbase.cc/home'],
-        ],
-    }
+        ])
+    ]),
+}
 
 Options
 -------

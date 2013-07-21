@@ -8,6 +8,7 @@
 import argparse
 import os
 import runpy
+from collections import OrderedDict
 
 
 config = {
@@ -16,20 +17,20 @@ config = {
     'font': ('Monospace', '12pt'),
     'separator': '>',
     'colors': ('#020202', '#999999', '#B3B3B3', '#4C4C4C'),
-    'links': {
-        'search': [
+    'links': OrderedDict([
+        ('search', [
             ['google', 'https://www.google.com/'],
             ['duckduckgo', 'http://duckduckgo.com/'],
             ['startpage', 'https://startpage.com/'],
-        ],
-        'media': [
+        ]),
+        ('media', [
             ['youtube', 'http://www.youtube.com/'],
-        ],
-        'foo': [
+        ]),
+        ('foo', [
             ['wikipedia', 'http://en.wikipedia.org/wiki/Main_Page'],
             ['wallbase', 'http://wallbase.cc/home'],
-        ],
-    },
+        ])
+    ])
 }
 
 
@@ -67,7 +68,7 @@ def main():
       font-size: %s;
       border-spacing: 8px;
     }
-    td { 
+    td {
       vertical-align: middle;
     }
     td:first-child {
@@ -79,14 +80,14 @@ def main():
       color: %s;
     }''' % (config['colors'][0], config['font'][0], config['colors'][1], config['colors'][1],
             config['font'][1], config['colors'][2], config['colors'][3])
-    
+
     links_html = ''
-    for group in sorted(config['links']):
+    for group in config['links']:
         links_html += '<tr><td align="right">%s</td><td>%s</td><td>' % (group, config['separator'])
-        for site in sorted(config['links'][group]):
+        for site in config['links'][group]:
             links_html += '<a href="%s">%s</a> ' % (site[1], site[0])
         links_html += '</td></tr>'
-    
+
     html = '''<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
     <html>
       <head>
@@ -100,14 +101,14 @@ def main():
         </table></td></tr></table>
       </body>
     </html>''' % (config['title'], links_html)
-    
+
     if not os.path.exists(config['output_dir']):
         os.makedirs(config['output_dir'])
     with open(config['output_dir'] + '/homepage.html', 'w') as file:
         file.write(html)
     with open(config['output_dir'] + '/style.css', 'w') as file:
         file.write(css)
-    
+
     os.system('tidy -utf8 -i -m -q -asxhtml %s' % config['output_dir'] + '/homepage.html')
 
 
