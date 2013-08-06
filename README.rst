@@ -62,8 +62,7 @@ Configuration file with default options would look like this::
             ['wikipedia', 'http://en.wikipedia.org/wiki/Main_Page'],
             ['wallbase', 'http://wallbase.cc/home'],
         ])
-    ]),
-}
+    ])
 
 Options
 -------
@@ -83,5 +82,5 @@ Options
 ``colors`` (type: ``tuple``)
     Colors. Consists of four ``string`` elements: background, links, group title, separator.
 
-``links`` (type: ``dictionary``)
-    Links. Each dictionary value (``list``) is a group of links (``list``). Each link has two elements: link name (``string``) and uri (``string``) (see example above).
+``links`` (type: ``OrderedDict``)
+    Links (see example configuration file above).
