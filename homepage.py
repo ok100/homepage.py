@@ -96,7 +96,7 @@ def main():
         <link rel="stylesheet" type="text/css" href="style.css" />
       </head>
       <body>
-        <table summary="container" border="0" width="100%%" height="100%%"><tr><td><table summary="container">
+        <table summary="container" border="0" width="100%%" style="height: 100%%"><tr><td><table summary="container">
           %s
         </table></td></tr></table>
       </body>
