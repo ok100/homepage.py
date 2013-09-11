@@ -48,11 +48,12 @@ def main():
     if os.path.exists(config_file):
         config.update((k, v) for k, v in runpy.run_path(config_file).items() if k in config)
 
-    css = '''body {
+    css = '''html, body {
       background-color: %s;
       font-family: "%s";
       font-weight: normal;
       margin-left: 7%%;
+      height: 100%%;
     }
     a:link,a:visited,a:active {
       text-decoration: none;
