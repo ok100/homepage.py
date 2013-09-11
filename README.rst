@@ -6,7 +6,7 @@ homepage.py
 homepage generator
 ------------------
 
-:Author: Ondrej Kipila <ok100 at lavabit dot com>
+:Author: Ondrej Kipila <ok100 at openmailbox dot org>
 :Version: git
 :Manual section: 1
 
